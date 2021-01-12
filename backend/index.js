@@ -1,9 +1,9 @@
 const express = require('express')
 const cors = require('cors')
 const config = require('./config')
-const https = require('https')
 const axios = require('axios')
 const morgan = require('morgan')
+const mcache = require('memory-cache')
 
 const app = express()
 
@@ -16,7 +16,26 @@ const version = 'v2'
 const product_url = `products`
 const manufacturer_url = `availability`
 
-app.get(`/api/${product_url}/:category`, (request, response) => {
+const cache = duration => {
+    return (request, response, next) => {
+        let key = request.originalUrl || req.url
+        let cachedBody = mcache.get(key)
+        if (cachedBody) {
+            response.send(cachedBody)
+            return
+        } else {
+            response.sendResponse = response.send
+            response.send = (body) => {
+                mcache.put(key, body, duration * 1000)
+                response.sendResponse(body)
+            }
+            next()
+        }
+    }
+}
+
+
+app.get(`/api/${product_url}/:category`, cache(300), (request, response) => {
     axios
         .get(`${config.reaktor_api_url}/${version}/${product_url}/${request.params.category}`)
         .then(res => response.json(res.data))

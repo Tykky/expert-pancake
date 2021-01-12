@@ -9,7 +9,7 @@ function App() {
   useEffect(() => {
     service.getCategory('gloves').then(data => {
       setGloves(data)
-    })},[])
+  })},[])
 
   return (
     <div>
