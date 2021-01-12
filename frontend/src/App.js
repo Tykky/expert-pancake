@@ -1,21 +1,32 @@
 import { useEffect, useState } from 'react'
 import './App.css';
-import api from './api'
+import service from './service'
 
 function App() {
   
   const [ gloves, setGloves ] = useState([])
   
   useEffect(() => {
-    api.getCategory('gloves').then(data => {
+    service.getCategory('gloves').then(data => {
       setGloves(data)
     })},[])
 
   return (
     <div>
-      {gloves.map(glove => {
-        return <p key={glove.id}>{ glove.name }</p>
-      })}
+      <table>
+        <tr>
+          <th>Name</th>
+          <th>Color</th>
+          <th>Price</th>
+        </tr>
+        {gloves.map(gloves => (
+          <tr>
+            <td>{ gloves.name }</td>
+            <td>{ gloves.color.join(', ') }</td>
+            <td>{ gloves.price } $</td>
+          </tr>
+        ))}
+      </table>
     </div>
   );
 }
