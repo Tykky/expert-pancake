@@ -28,7 +28,7 @@ app.get(`/api/${manufacturer_url}/:manufacturer`, (request, response) => {
         .then(res => response.json(res.data))
 })
 
-const PORT = process.env.port || 3001
+const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
 })
