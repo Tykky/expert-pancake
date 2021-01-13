@@ -1,32 +1,35 @@
 import { useEffect, useState } from 'react'
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import './App.css';
 import service from './service'
+import config from './config'
+import ProductTable from './components'
 
-function App() {
-  
-  const [ gloves, setGloves ] = useState([])
-  
+const App = () => {
+
+  const [ products, setProducts ] = useState([])
+
   useEffect(() => {
-    service.getCategory('gloves').then(data => {
-      setGloves(data)
-  })},[])
+    config.categories.map(category => {
+      service.getCategory(category.name).then(data => {
+        const copy = [...products]
+        copy[category.id] = data
+        setProducts(copy)
+      })
+    })
+  },[])
 
   return (
     <div>
-      <table>
-        <tr>
-          <th>Name</th>
-          <th>Color</th>
-          <th>Price</th>
-        </tr>
-        {gloves.map(gloves => (
-          <tr>
-            <td>{ gloves.name }</td>
-            <td>{ gloves.color.join(', ') }</td>
-            <td>{ gloves.price } $</td>
-          </tr>
-        ))}
-      </table>
+      <Router>
+        <Switch>
+          {config.categories.map(category => (
+            <Route path={`/${category.name}`}>
+              <ProductTable products={products[category.id]} />
+            </Route>
+          ))}
+        </Switch>
+      </Router>
     </div>
   );
 }

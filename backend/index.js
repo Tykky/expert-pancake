@@ -12,10 +12,6 @@ app.use(express.json())
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms'))
 app.use(cors())
 
-const version = 'v2'
-const product_url = `products`
-const manufacturer_url = `availability`
-
 const cache = duration => {
     return (request, response, next) => {
         let key = request.originalUrl || req.url
@@ -24,16 +20,19 @@ const cache = duration => {
             response.send(cachedBody)
             return
         } else {
-            response.sendResponse = response.send
+            response.tmp = response.send
             response.send = (body) => {
                 mcache.put(key, body, duration * 1000)
-                response.sendResponse(body)
+                response.tmp(body)
             }
             next()
         }
     }
 }
 
+const version = 'v2'
+const product_url = `products`
+const manufacturer_url = `availability`
 
 app.get(`/api/${product_url}/:category`, cache(300), (request, response) => {
     axios
