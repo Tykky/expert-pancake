@@ -10,18 +10,29 @@ const App = () => {
   const [ products, setProducts ] = useState([])
 
   useEffect(() => {
-    config.categories.map(category => {
+    config.categories.forEach(category => {
       service.getCategory(category.name).then(data => {
-        const copy = [...products]
-        copy[category.id] = data
-        setProducts(copy)
+        setProducts(products => {
+          const copy = [...products]
+          copy[category.id] = data
+          return copy
+        })
       })
     })
   },[])
 
+  const padding = {
+    padding: 5
+  }
+
   return (
     <div>
       <Router>
+        <div>
+        {config.categories.map(category => (
+          <Link key={category.id} style={padding} to={`/${category.name}`}>{category.name}</Link>
+        ))}
+        </div>
         <Switch>
           {config.categories.map(category => (
             <Route path={`/${category.name}`}>
