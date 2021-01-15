@@ -6,6 +6,7 @@ const ProductTable = (props) => (
             <th>Colors</th>
             <th>Price</th>
             <th>Manufacturer</th>
+            <th>Availability</th>
         </tr> 
         </thead>
         <tbody>
@@ -15,6 +16,7 @@ const ProductTable = (props) => (
                 <td>{ product.color.join(', ') }</td>
                 <td>{ product.price }</td>
                 <td>{ product.manufacturer }</td>
+                <td>{ props.availability[product.manufacturer][product.id] }</td>
             </tr>
         )) : <tr></tr>}
         </tbody>
