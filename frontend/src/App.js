@@ -1,6 +1,6 @@
-import { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
-import './App.css';
+import './App.css'
 import service from './service'
 import config from './config'
 import ProductTable from './components'
@@ -55,9 +55,9 @@ const App = () => {
     <div>
       <Router>
         <div>
-        {config.categories.map(category => (
-          <Link key={category.id} style={padding} to={`/${category.name}`}>{category.name}</Link>
-        ))}
+          {config.categories.map(category => (
+            <Link key={category.id} style={padding} to={`/${category.name}`}>{category.name}</Link>
+          ))}
         </div>
         <Switch>
           {config.categories.map(category => (
@@ -68,7 +68,7 @@ const App = () => {
         </Switch>
       </Router>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
