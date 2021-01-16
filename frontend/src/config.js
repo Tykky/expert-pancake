@@ -1,5 +1,5 @@
 const config = {
-    api_url: '/api',
+    api_url: 'api',
     categories: [
     {
         name: 'gloves',

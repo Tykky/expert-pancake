@@ -52,7 +52,7 @@ app.get(`/api/${config.availability_url}/:manufacturer`, cache(300), (request, r
                 })
                 response.json(availability)
             } else {
-                console.log(`Invalid response from ${config.availability}/${request.params.manufacturer}`)
+                console.log(`Invalid response from ${config.availability_url}/${request.params.manufacturer}`)
                 call()
             }
         }).catch(error => {

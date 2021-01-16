@@ -16,11 +16,17 @@ const ProductTable = (props) => (
                 <td>{ product.color.join(', ') }</td>
                 <td>{ product.price }</td>
                 <td>{ product.manufacturer }</td>
-                <td>{ props.availability[product.manufacturer][product.id] }</td>
+                <td>
+                    { 
+                        props.availability[product.manufacturer][product.id.toUpperCase()] ? 
+                        props.availability[product.manufacturer][product.id.toUpperCase()] : 
+                        'fetching ...'
+                    }
+                </td>
             </tr>
         )) : <tr></tr>}
         </tbody>
-    </table>
+    </table> 
 )
 
 export default ProductTable
