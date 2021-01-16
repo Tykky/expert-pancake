@@ -5,6 +5,7 @@ const morgan = require('morgan')
 const mcache = require('memory-cache')
 const service = require('./service')
 const parseXmlString = require('xml2js').parseString
+const path = require('path')
 const { reaktor_api_url } = require('./config')
 
 const app = express()
@@ -61,6 +62,8 @@ app.get(`/api/${config.availability_url}/:manufacturer`, cache(300), (request, r
     }
     call()
 }) 
+
+app.get('*', (request, response) => response.sendFile(path.resolve('build', 'index.html')))
 
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
