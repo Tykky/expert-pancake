@@ -12,7 +12,9 @@ const config = {
     {
       name: 'beanies',
       id: 2
-    }]
+    }],
+  infinite_scroll_increment: 100,
+  infinite_scroll_default: 50
 }
 
 export default config
