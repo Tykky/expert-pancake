@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import './App.css'
 import service from './service'
 import config from './config'
-import ProductTable from './components'
+import ProductTable from './components/ProductTable'
 
 const App = () => {
 
@@ -21,7 +21,7 @@ const App = () => {
 
   const parseAvailability = products => {
     products.forEach(product => {
-      if(!availRef.current[product.manufacturer]) {
+      if (!availRef.current[product.manufacturer]) {
         updateAvailability({}, product.manufacturer)
         service.getAvailability(product.manufacturer).then(data => {
           updateAvailability(data, product.manufacturer)
@@ -41,8 +41,10 @@ const App = () => {
   useEffect(() => {
     config.categories.forEach(category => {
       service.getCategory(category.name).then(data => {
-        parseAvailability(data)
-        updateProducts(data, category.id)
+        if (data) {
+          parseAvailability(data)
+          updateProducts(data, category.id)
+        }
       })
     })
   },[])

@@ -17,6 +17,4 @@ const getAvailability = manufacturer => axios
     console.log(error)
   })
 
-const service = { getCategory, getAvailability }
-
-export default service
+export default { getCategory, getAvailability }

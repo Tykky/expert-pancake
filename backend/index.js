@@ -31,6 +31,14 @@ const cache = duration => {
   }
 }
 
+const parseAvailabilityString = xml => {
+  let instockvalue
+  parseXmlString(xml, (error, result) => {
+    instockvalue = result.AVAILABILITY.INSTOCKVALUE[0]
+  })
+  return instockvalue
+}
+
 app.get(`/api/${config.product_url}/:category`, cache(300), (request, response) => {
   service.getCategory(request.params.category).then(data => {
     response.json(data)
@@ -45,9 +53,7 @@ app.get(`/api/${config.availability_url}/:manufacturer`, cache(300), (request, r
       let availability = {}
       if(typeof(data.response) === 'object') {
         data.response.forEach(product => {
-          parseXmlString(product.DATAPAYLOAD, (err, result) => {
-            availability[product.id] = result.AVAILABILITY.INSTOCKVALUE[0]
-          })
+          availability[product.id.toLowerCase()] = parseAvailabilityString(product.DATAPAYLOAD)
         })
         response.json(availability)
       } else {
