@@ -2,16 +2,11 @@ import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import config from '../config'
+import { Table, TableHead, TableBody, TableRow, TableCell, TableContainer, Paper } from '@material-ui/core'
 
 const ProductTable = (props) => {
 
   const [ productDisplay, setProductDisplay ] = useState()
-
-  const instockValue = {
-    INSTOCK: 'in stock',
-    OUTOFSTOCK: 'out of stock',
-    LESSTHAN10: 'less than 10'
-  }
 
   useEffect(() => {
     if (props.products) {
@@ -23,6 +18,12 @@ const ProductTable = (props) => {
     }
   },[props.products])
 
+  const instockValue = {
+    INSTOCK: <b style={{ color: 'green' }}>in stock</b>,
+    OUTOFSTOCK: <b style={{ color: 'red' }}>out of stock</b>,
+    LESSTHAN10: <b style={{ color: 'orange' }}>less than 10</b>
+  }
+
   return (
     productDisplay ?
       <InfiniteScroll
@@ -32,34 +33,36 @@ const ProductTable = (props) => {
         ))}
         hasMore={props.products.length > setProductDisplay.length}
       >
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Colors</th>
-              <th>Price</th>
-              <th>Manufacturer</th>
-              <th>Availability</th>
-            </tr>
-          </thead>
-          <tbody>
-            {productDisplay.map(product => (
-              <tr key={ product.id }>
-                <td>{ product.name }</td>
-                <td>{ product.color.join(', ') }</td>
-                <td>{ product.price }</td>
-                <td>{ product.manufacturer }</td>
-                <td>
-                  {
-                    props.availability[product.manufacturer][product.id] ?
-                      instockValue[props.availability[product.manufacturer][product.id]] :
-                      'fetching ...'
-                  }
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <TableContainer component={Paper} variant='outlined'>
+          <Table size="small" stickyHeader={true}>
+            <TableHead>
+              <TableRow>
+                <TableCell>Name</TableCell>
+                <TableCell>Colors</TableCell>
+                <TableCell>Price</TableCell>
+                <TableCell>Manufacturer</TableCell>
+                <TableCell>Availability</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {productDisplay.map(product => (
+                <TableRow key={ product.id }>
+                  <TableCell>{ product.name }</TableCell>
+                  <TableCell>{ product.color.join(', ') }</TableCell>
+                  <TableCell>{ product.price }</TableCell>
+                  <TableCell>{ product.manufacturer }</TableCell>
+                  <TableCell>
+                    {
+                      props.availability[product.manufacturer][product.id] ?
+                        instockValue[props.availability[product.manufacturer][product.id]] :
+                        'fetching ...'
+                    }
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
       </InfiniteScroll>
       : <p>Loading...</p>
   )

@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
-import './App.css'
 import service from './service'
 import config from './config'
 import ProductTable from './components/ProductTable'
+import { Button } from '@material-ui/core'
 
 const App = () => {
 
@@ -19,7 +19,7 @@ const App = () => {
     setAvailability(copy)
   }
 
-  const parseAvailability = products => {
+  const fetchAvailability = products => {
     products.forEach(product => {
       if (!availRef.current[product.manufacturer]) {
         updateAvailability({}, product.manufacturer)
@@ -42,23 +42,26 @@ const App = () => {
     config.categories.forEach(category => {
       service.getCategory(category.name).then(data => {
         if (data) {
-          parseAvailability(data)
+          fetchAvailability(data)
           updateProducts(data, category.id)
         }
       })
     })
   },[])
 
-  const padding = {
-    padding: 5
-  }
-
   return (
     <div>
       <Router>
         <div>
           {config.categories.map(category => (
-            <Link key={category.id} style={padding} to={`/${category.name}`}>{category.name}</Link>
+            <Button
+              key={category.name}
+              component={Link}
+              to={`/${category.name}`}
+              color='primary'
+            >
+              {category.name}
+            </Button>
           ))}
         </div>
         <Switch>
