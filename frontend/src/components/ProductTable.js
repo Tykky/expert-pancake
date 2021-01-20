@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-//import config from '../config'
-import { Table, /*TableHead, TableBody, TableRow,*/ TableCell } from '@material-ui/core'
+import { TableCell } from '@material-ui/core'
 import { WindowScroller, Table as VirtualTable, Column, AutoSizer } from 'react-virtualized'
 import 'react-virtualized/styles.css'
 
@@ -85,7 +84,7 @@ const ProductTable = (props) => {
 
   return (
     props.products ?
-      <Table size='small'>
+      <div >
         <WindowScroller>
           {({ height, isScrolling, onChildScroll, scrollTop }) => (
             <AutoSizer>
@@ -117,7 +116,7 @@ const ProductTable = (props) => {
             </AutoSizer>
           )}
         </WindowScroller>
-      </Table>
+      </div>
       : <p>loading...</p>
   )
 }

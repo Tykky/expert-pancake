@@ -51,27 +51,29 @@ const App = () => {
 
   return (
     <div>
-      <Router>
-        <div>
-          {config.categories.map(category => (
-            <Button
-              key={category.name}
-              component={Link}
-              to={`/${category.name}`}
-              color='primary'
-            >
-              {category.name}
-            </Button>
-          ))}
-        </div>
-        <Switch>
-          {config.categories.map(category => (
-            <Route key={category.id.toString()} path={`/${category.name}`}>
-              <ProductTable products={products[category.id]} availability={availability} />
-            </Route>
-          ))}
-        </Switch>
-      </Router>
+      <div style={{ width: 1000, margin: 'auto' }}>
+        <Router>
+          <div>
+            {config.categories.map(category => (
+              <Button
+                key={category.name}
+                component={Link}
+                to={`/${category.name}`}
+                color='primary'
+              >
+                {category.name}
+              </Button>
+            ))}
+          </div>
+          <Switch>
+            {config.categories.map(category => (
+              <Route key={category.id.toString()} path={`/${category.name}`}>
+                <ProductTable products={products[category.id]} availability={availability} />
+              </Route>
+            ))}
+          </Switch>
+        </Router>
+      </div>
     </div>
   )
 }
