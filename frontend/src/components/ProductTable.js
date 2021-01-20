@@ -1,5 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import propTypes from 'prop-types'
 import { TableCell } from '@material-ui/core'
 import { WindowScroller, Table as VirtualTable, Column, AutoSizer } from 'react-virtualized'
 import 'react-virtualized/styles.css'
@@ -84,7 +84,7 @@ const ProductTable = (props) => {
 
   return (
     props.products ?
-      <div >
+      <div>
         <WindowScroller>
           {({ height, isScrolling, onChildScroll, scrollTop }) => (
             <AutoSizer>
@@ -122,8 +122,8 @@ const ProductTable = (props) => {
 }
 
 ProductTable.propTypes = {
-  products: PropTypes.array,
-  availability: PropTypes.object
+  products: propTypes.array,
+  availability: propTypes.object
 }
 
 export default ProductTable
