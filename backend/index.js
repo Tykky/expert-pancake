@@ -72,4 +72,5 @@ app.get('*', (request, response) => response.sendFile(path.resolve('build', 'ind
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
+  console.log(`The app is served at http://localhost:${PORT}`)
 })

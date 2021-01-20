@@ -10,16 +10,19 @@ scripts:
 
 ## How to build & run
 Works like any other node project. Install
-dependencies with
+dependencies with:
 ```
 npm install
 ```
-run in production mode
+run in production mode with:
 ```
 npm start
 ```
-and in development mode
+The backend can be run in dev mode with:
 ```
-npm run dev
+npm run dev-backend
 ```
-After build & run [open](http://localhost:3001/) browser.
+and frontend in dev mode with:
+```
+npm run dev-frontend
+```

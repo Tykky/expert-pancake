@@ -4,7 +4,7 @@
     "heroku-prebuild": "cd frontend && npm install && cd ../backend && npm install && npm run build",
     "install": "npm run heroku-prebuild",
     "start": "cd backend && npm start",
-    "dev": "cd backend && npm run dev"
-  },
-  "dependencies": {}
+    "dev-backend": "cd backend && npm run dev",
+    "dev-frontend": "cd frontend && npm start"
+  }
 }
