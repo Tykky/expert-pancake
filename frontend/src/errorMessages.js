@@ -10,12 +10,13 @@ const timeoutError = {
     30s. View more information at<> </>
     <a href="https://devcenter.heroku.com/articles/request-timeout#table-of-contents:~:text=Occasionally%20a%20web%20request%20may%20hang,longer%20than%2030%20seconds%20to%20complete.">
       Heroku Dev Center
-    </a>
+    </a><br/>
+    The app automatically tries to fetch data again...
   </>,
   open: true
 }
 
-const notFoundError = {
+const notRespondingError = {
   title: 'Server did not respond',
   body:
     <>
@@ -40,4 +41,4 @@ const internalError = {
   open: true
 }
 
-export default { timeoutError, notFoundError, internalError }
+export default { timeoutError, notRespondingError, internalError }

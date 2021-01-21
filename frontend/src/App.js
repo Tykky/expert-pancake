@@ -6,7 +6,7 @@ import ProductTable from './components/ProductTable'
 import Notification from './components/ErrorNotification'
 import { Button } from '@material-ui/core'
 import errorMessages from './errorMessages'
-
+import { Alert } from '@material-ui/lab'
 
 
 const App = () => {
@@ -14,17 +14,21 @@ const App = () => {
   const [ products, setProducts ] = useState([])
   const [ availability, setAvailability ] = useState({})
   const [ notification, setNotification ] = useState({ title: '', body: '', open: false })
+  const [ alert, setAlert ] = useState({ title: '', body: '', open: false })
 
   const availRef = useRef(availability)
 
   const errorCodes = {
     500: errorMessages.internalError,
-    503: errorMessages.timeoutError,
-    404: errorMessages.notFoundError
+    503: errorMessages.timeoutError
   }
 
   const errorHandler = error => (
-    setNotification(errorCodes[error.response.status])
+    error.response ?
+      error.response.status === 503 ?
+        alert(errorCodes[503]) :
+        setNotification(errorCodes[error.response.status]) :
+      setNotification(errorMessages.notRespondingError)
   )
 
   const updateAvailability = (data, manufacturer) => {
@@ -40,7 +44,10 @@ const App = () => {
         updateAvailability({}, product.manufacturer)
         service.getAvailability(product.manufacturer).then(data => {
           updateAvailability(data, product.manufacturer)
-        }).catch(errorHandler)
+        }).catch(error => {
+          errorHandler(error)
+          fetchAvailability(products)
+        })
       }
     })
   }
@@ -52,6 +59,10 @@ const App = () => {
       return copy
     })
   }
+
+  useEffect(() => {
+    setTimeout(() => setAlert({ open: false }), config.alertTimeoutMs)
+  },[alert])
 
   useEffect(() => {
     config.categories.forEach(category => {
@@ -66,6 +77,9 @@ const App = () => {
 
   return (
     <div>
+      <Alert severity="error" style={{ visibility: alert.open ? 'visible' : 'hidden' }}>
+        <b>{alert.title}</b><br/>{alert.body}
+      </Alert>
       <Notification notification={notification} setNotification={setNotification} />
       <div style={{ width: 1000, margin: 'auto' }}>
         <Router>
