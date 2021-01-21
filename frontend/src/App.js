@@ -26,7 +26,7 @@ const App = () => {
   const errorHandler = error => (
     error.response ?
       error.response.status === 503 ?
-        alert(errorCodes[503]) :
+        setAlert(errorCodes[503]) :
         setNotification(errorCodes[error.response.status]) :
       setNotification(errorMessages.notRespondingError)
   )
@@ -45,6 +45,7 @@ const App = () => {
         service.getAvailability(product.manufacturer).then(data => {
           updateAvailability(data, product.manufacturer)
         }).catch(error => {
+          updateAvailability(undefined, product.manufacturer)
           errorHandler(error)
           fetchAvailability(products)
         })
