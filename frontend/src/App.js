@@ -18,16 +18,11 @@ const App = () => {
 
   const availRef = useRef(availability)
 
-  const errorCodes = {
-    500: errorMessages.internalError,
-    503: errorMessages.timeoutError
-  }
-
   const errorHandler = error => (
     error.response ?
       error.response.status === 503 ?
-        setAlert(errorCodes[503]) :
-        setNotification(errorCodes[error.response.status]) :
+        setAlert(errorMessages.timeoutError) :
+        setNotification(errorMessages.internalError) :
       setNotification(errorMessages.notRespondingError)
   )
 
@@ -62,7 +57,7 @@ const App = () => {
   }
 
   useEffect(() => {
-    setTimeout(() => setAlert({ open: false }), config.alertTimeoutMs)
+    setTimeout(() => setAlert({ open: false }), config.alertTimeoutSeconds * 1000)
   },[alert])
 
   useEffect(() => {

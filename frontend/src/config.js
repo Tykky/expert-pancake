@@ -13,7 +13,7 @@ const config = {
       name: 'beanies',
       id: 2
     }],
-  alertTimeoutMs: 15000
+  alertTimeoutSeconds: 15
 }
 
 export default config

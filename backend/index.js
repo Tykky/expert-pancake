@@ -42,7 +42,7 @@ const parseAvailabilityString = xml => {
 app.get(`/api/${config.product_url}/:category`, cache(300), (request, response) => {
   service.getCategory(request.params.category).then(data => {
     response.json(data)
-  })
+  }).catch(() => response.status(500).end())
 })
 
 app.get(`/api/${config.availability_url}/:manufacturer`, cache(300), (request, response) => {
@@ -58,7 +58,7 @@ app.get(`/api/${config.availability_url}/:manufacturer`, cache(300), (request, r
         console.log(`Invalid response from ${config.availability_url}/${request.params.manufacturer}`)
         call()
       }
-    })
+    }).catch(() => response.status(500).end())
   }
   call()
 })

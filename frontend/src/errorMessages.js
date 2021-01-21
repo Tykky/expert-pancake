@@ -35,8 +35,7 @@ const internalError = {
     <>
       The server failed to fulfill
       request. This is highly likely
-      due to some internal issues i.e
-      bad code.
+      due to some internal issues.
     </>,
   open: true
 }
