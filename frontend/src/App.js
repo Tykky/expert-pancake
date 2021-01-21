@@ -78,14 +78,18 @@ const App = () => {
       </Alert>
       <Notification notification={notification} setNotification={setNotification} />
       <div style={{ width: 1000, margin: 'auto' }}>
+        <Button color='primary' onClick={() => window.location.reload()} variant='outlined'>
+          Refresh data
+        </Button>
         <Router>
-          <div>
+          <div style={{ padding: 10 }}>
             {config.categories.map(category => (
               <Button
                 key={category.name}
                 component={Link}
                 to={`/${category.name}`}
                 color='primary'
+                variant='outlined'
               >
                 {category.name}
               </Button>
