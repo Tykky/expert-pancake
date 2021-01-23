@@ -39,28 +39,28 @@ const parseAvailabilityString = xml => {
   return instockvalue
 }
 
-app.get(`/api/${config.product_url}/:category`, cache(300), (request, response) => {
+app.get(`/api/${config.product_url}/:category`, cache(config.cache_duration_seconds), (request, response) => {
   service.getCategory(request.params.category).then(data => {
     response.json(data)
   }).catch(() => response.status(500).end())
 })
 
-app.get(`/api/${config.availability_url}/:manufacturer`, cache(300), (request, response) => {
-  const call = () => {
+app.get(`/api/${config.availability_url}/:manufacturer`, cache(config.cache_duration_seconds), (request, response) => {
+  const fetch = () => {
     service.getAvailability(request.params.manufacturer).then(data => {
       let availability = {}
-      if(typeof(data.response) === 'object') {
+      if(data.response !== '[]') {
         data.response.forEach(product => {
           availability[product.id.toLowerCase()] = parseAvailabilityString(product.DATAPAYLOAD)
         })
         response.json(availability)
       } else {
         console.log(`Invalid response from ${config.availability_url}/${request.params.manufacturer}`)
-        call()
+        fetch()
       }
     }).catch(() => response.status(500).end())
   }
-  call()
+  fetch()
 })
 
 app.get('*', (request, response) => response.sendFile(path.resolve('build', 'index.html')))

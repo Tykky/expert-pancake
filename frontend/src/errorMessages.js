@@ -5,13 +5,9 @@ const timeoutError = {
   body:
   <>
     Connection timed out due to Reaktor
-    bad API being notoriously slow. Heroku
+    bad API being slow. Heroku
     times out every request that takes over
-    30s. View more information at<> </>
-    <a href="https://devcenter.heroku.com/articles/request-timeout#table-of-contents:~:text=Occasionally%20a%20web%20request%20may%20hang,longer%20than%2030%20seconds%20to%20complete.">
-      Heroku Dev Center
-    </a><br/>
-    The app automatically tries to fetch data again...
+    30s. The app automatically tries to fetch data again...
   </>,
   open: true
 }
@@ -34,8 +30,7 @@ const internalError = {
   body:
     <>
       The server failed to fulfill
-      request. This is highly likely
-      due to some internal issues.
+      request.
     </>,
   open: true
 }
